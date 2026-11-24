@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Hand Gesture Controller",
+  "version": "4.0",
+  "description": "Control any webpage with hand gestures using MediaPipe",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Hand Gesture Controller",
+    "default_icon": "chrome extensions icon.webp"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": ["activeTab", "scripting", "tabs", "storage", "windows"],
+  "host_permissions": ["<all_urls>"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["wasm/*", "hand_landmarker.task", "vision_bundle.mjs"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

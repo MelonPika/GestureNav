@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gesture Camera — Hand Gesture Controller</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 260px;
+    background: #111;
+    color: #fff;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    gap: 8px;
+  }
+  h3 { font-size: 13px; font-weight: 600; }
+  #wrap {
+    position: relative;
+    width: 236px;
+    height: 177px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+  }
+  #video, #landmarks {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+  }
+  #badge {
+    position: absolute;
+    top: 6px; left: 6px;
+    background: rgba(0, 0, 0, .6);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    pointer-events: none;
+    transition: background .15s;
+  }
+  #badge.active { background: rgba(0, 255, 136, .7); color: #111; }
+  #stopBtn {
+    width: 100%;
+    padding: 7px 0;
+    border: 0;
+    border-radius: 4px;
+    background: #FF4444;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  #statusMsg {
+    font-size: 10px;
+    color: #888;
+    text-align: center;
+    min-height: 12px;
+  }
+  #linkedMsg {
+    font-size: 10px;
+    color: #4285F4;
+    text-align: center;
+    min-height: 12px;
+    max-width: 236px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .legend {
+    font-size: 9px;
+    color: #666;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px 6px;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+  <h3>✋ Gesture Camera</h3>
+  <div id="wrap">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="landmarks"></canvas>
+    <div id="badge">No hand</div>
+  </div>
+  <p id="statusMsg">Starting…</p>
+  <p id="linkedMsg"></p>
+  <div class="legend"></div>
+  <button id="stopBtn">Stop</button>
+
+  <!-- Plain script first: defines detectGesture()/GESTURES before camera.js
+       (a module) runs, so camera.js can use them without an import. -->
+  <script src="gestures.js"></script>
+  <script src="camera.js" type="module"></script>
+</body>
+</html>
